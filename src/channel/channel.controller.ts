@@ -113,5 +113,11 @@ export class ChannelController {
   async getAllDemand(@Param('channelId') channelId: string) {
     return this.channelService.GetAllDemand(channelId);
   }
+  @Patch(':channelId/refused')
+  async refuseDemand(@Body('userId') userId: string, @Param('channelId') channelId: string) {
+    return this.channelService.RefuseDemand(userId, channelId);
+  }
+
+
 
 }

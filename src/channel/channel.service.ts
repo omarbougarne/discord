@@ -252,6 +252,28 @@ export class ChannelService {
       throw new Error("Error fetching demand for integration: " + error.message);
     }
   }
+  async RefuseDemand(userId: string, channelId: string) {
+    try {
+      const channel = await this.channelModel.findByIdAndUpdate(
+        channelId,
+        { $pull: { demandsForIntegration: userId } },
+        { new: true }
+      );
+
+      if (!channel) {
+        return { message: "Channel not found" };
+      }
+
+      return {
+        message: "Demand for integration successfully refused",
+        channel: channel,
+      };
+    } catch (error) {
+      throw new Error("Error refusing demand for integration: " + error.message);
+    }
+  }
+
+
 
 
   @Cron('* * * * * *')
